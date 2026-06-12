@@ -95,8 +95,9 @@ td.num-col{color:var(--text3);font-size:.75rem;width:36px}
 tr.done td:first-child{box-shadow:inset 3px 0 0 var(--green)}
 tr.partial td:first-child{box-shadow:inset 3px 0 0 var(--amber)}
 tr.none td:first-child{box-shadow:inset 3px 0 0 #e5e7eb}
-tr.suspended td{opacity:.65;background:#fff5f5!important}
-tr.suspended td:first-child{box-shadow:inset 3px 0 0 var(--red)!important}
+tr.suspended td{background:#fef2f2!important;border-bottom-color:#fecaca!important}
+tr.suspended td:first-child{box-shadow:inset 4px 0 0 var(--red)!important}
+tr.suspended strong{color:var(--red)!important}
 .badge-susp{background:#fef2f2;color:#dc2626;border:1px solid #fecaca;display:inline-flex;align-items:center;gap:2px;padding:2px 6px;border-radius:12px;font-size:.63rem;font-weight:700;margin-left:5px;vertical-align:middle}
 
 /* ── BADGES ── */
@@ -617,10 +618,13 @@ function toggleFld(span, field, idx) {
   const isOn = span.classList.contains('ck-ok');
   span.className = 'ck ck-toggle ' + (isOn ? 'ck-no' : 'ck-ok');
   if (field === 'suspended') {
-    span.textContent = isOn ? '✓' : '⚠';
-    if (!isOn) span.style.cssText = 'background:#fef2f2;color:#dc2626';
-    else span.style.cssText = '';
-    DATA.clients[idx].suspended = !isOn;
+    const nowSusp = !isOn;
+    span.textContent = nowSusp ? '⚠' : '✓';
+    span.style.cssText = nowSusp ? 'background:#fef2f2;color:#dc2626' : '';
+    DATA.clients[idx].suspended = nowSusp;
+    const tr = span.closest('tr');
+    if (nowSusp) tr.classList.add('suspended');
+    else tr.classList.remove('suspended');
   } else {
     span.textContent = isOn ? '✗' : '✓';
     DATA.clients[idx][field] = isOn ? '' : 'Ativo';

@@ -324,9 +324,9 @@ table.show-cols .col-extra{display:table-cell}
 <div id="toast"></div>
 
 <script>
-const ORG  = 'indexnet-agencia-de-mkt-e-dev';
+const ORG  = 'Franppires';
 const REPO = 'status-sites';
-const RAW  = `https://raw.githubusercontent.com/${ORG}/${REPO}/main/data.json`;
+const RAW  = `https://raw.githubusercontent.com/${ORG}/${REPO}/data/data.json`;
 const API  = `https://api.github.com/repos/${ORG}/${REPO}/contents/data.json`;
 
 let DATA = null, editMode = false, dirty = false;
@@ -417,24 +417,25 @@ async function autoSave() {
   const token = localStorage.getItem('gh_token');
   if (!token) { _saving = false; return; }
   collectEdits();
-  let attempts = 0;
-  while (attempts < 3) {
-    attempts++;
+  for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      const getR = await fetch(API, { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' } });
+      const getR = await fetch(API + '?ref=data', { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' } });
       if (!getR.ok) throw new Error('SHA fetch ' + getR.status);
       const meta = await getR.json();
       const content = btoa(unescape(encodeURIComponent(JSON.stringify(DATA, null, 2))));
       const putR = await fetch(API, {
         method: 'PUT',
         headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: 'dashboard auto-save', content, sha: meta.sha })
+        body: JSON.stringify({ message: 'dashboard auto-save', content, sha: meta.sha, branch: 'data' })
       });
       if (putR.ok) { dirty = false; toast('✓', 'ok'); break; }
-      const e = await putR.json();
-      if (putR.status === 409 || (e.message||'').includes('does not match')) continue;
-      toast('Erro ao salvar: ' + (e.message||putR.status), 'err'); break;
-    } catch(e) { toast('Erro ao salvar: ' + e.message, 'err'); break; }
+      if (attempt < 2) continue;
+      const e = await putR.json().catch(() => ({}));
+      toast('Erro ao salvar: ' + (e.message||putR.status), 'err');
+    } catch(e) {
+      if (attempt < 2) continue;
+      toast('Erro ao salvar: ' + e.message, 'err');
+    }
   }
   _saving = false;
   if (_savePending) { _savePending = false; autoSave(); }
@@ -630,7 +631,7 @@ async function saveData() {
     const putR = await fetch(API, {
       method: 'PUT',
       headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: 'update manual ' + new Date().toLocaleString('pt-BR'), content, sha: meta.sha })
+      body: JSON.stringify({ message: 'update manual ' + new Date().toLocaleString('pt-BR'), content, sha: meta.sha, branch: 'data' })
     });
     if (putR.ok) { toast('Salvo com sucesso! ✓', 'ok'); dirty = false; cancelEdit(); }
     else { const e = await putR.json(); toast('Erro ao salvar: ' + (e.message||putR.status), 'err'); }

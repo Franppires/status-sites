@@ -123,6 +123,19 @@ td.chk-col{width:46px;text-align:center;padding:9px 4px}
 .srv-hg{background:#fef9c3;color:#92400e}
 .srv-ab{background:var(--purple-bg);color:#6d28d9}
 .srv-out{background:#f1f5f9;color:#64748b}
+select.srv-sel{padding:2px 6px;border-radius:5px;font-size:.68rem;font-weight:600;letter-spacing:.2px;font-family:inherit;border:1px solid transparent;max-width:100px;cursor:default}
+select.srv-sel:disabled{-webkit-appearance:none;appearance:none}
+select.srv-sel:not(:disabled){cursor:pointer;border-color:var(--border)}
+
+/* ── DELETE / ADD ── */
+.del-col{display:none!important;width:32px;text-align:center;padding:4px!important}
+.del-btn{background:none;border:none;color:#fca5a5;cursor:pointer;font-size:1rem;padding:2px;border-radius:4px;line-height:1;transition:color .15s}
+.del-btn:hover{color:#dc2626}
+body.editing .del-col{display:table-cell!important}
+body.editing .ck-toggle{cursor:pointer;transition:transform .1s}
+body.editing .ck-toggle:hover{transform:scale(1.2)}
+#btn-add{display:none}
+body.editing #btn-add{display:inline-flex}
 
 /* ── STATUS DROPDOWNS ── */
 .st-sel{padding:4px 8px;border-radius:6px;font-size:.75rem;font-weight:600;font-family:inherit;border:1px solid;cursor:pointer;width:100%}
@@ -176,6 +189,7 @@ table.show-cols .col-extra{display:table-cell}
   </div>
   <div class="hdr-actions">
     <div class="saving-indicator" id="saving-ind"><div class="spinner"></div>Salvando...</div>
+    <button id="btn-add" onclick="addDomain()" style="background:rgba(22,163,74,.2);color:#86efac;border:1px solid rgba(22,163,74,.3)">＋ Adicionar</button>
     <button class="btn-edit" onclick="startEdit()">✏️ Editar</button>
     <button class="btn-save" onclick="saveData()">💾 Salvar alterações</button>
     <button class="btn-cancel" onclick="cancelEdit()">✕ Cancelar</button>
@@ -259,7 +273,9 @@ table.show-cols .col-extra{display:table-cell}
         <th>WP</th>
         <th>PHP</th>
         <th class="chk-col" title="PHP-FPM ativo">FPM</th>
+        <th class="chk-col" title="Suspenso no servidor">Susp.</th>
         <th class="chk-col" title="PageSpeed Insights">⚡</th>
+        <th class="del-col"></th>
         <th class="col-extra">Responsável</th>
         <th class="col-extra">Status GH</th>
         <th class="col-extra">Status CF</th>
@@ -270,6 +286,24 @@ table.show-cols .col-extra{display:table-cell}
     <tbody id="tbody"></tbody>
   </table>
   <div id="empty"><div class="ico">🔍</div><div>Nenhum resultado encontrado</div></div>
+</div>
+
+<div id="modal-add" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:14px;padding:28px 32px;min-width:360px;box-shadow:0 24px 60px rgba(0,0,0,.3)">
+    <h3 style="margin-bottom:18px;font-size:1rem;color:var(--navy);font-weight:700">Adicionar domínio</h3>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <input id="add-username" placeholder="Username (ex: cliente)" style="padding:9px 11px;border:1px solid var(--border);border-radius:7px;font-size:.82rem;font-family:inherit" onkeydown="if(event.key==='Enter')document.getElementById('add-domain').focus()">
+      <input id="add-domain" placeholder="Domínio (ex: cliente.com.br)" style="padding:9px 11px;border:1px solid var(--border);border-radius:7px;font-size:.82rem;font-family:inherit" onkeydown="if(event.key==='Enter')confirmAdd()">
+      <select id="add-servidor" style="padding:9px 11px;border:1px solid var(--border);border-radius:7px;font-size:.82rem;font-family:inherit;background:#fff">
+        <option value="">— Servidor</option>
+        <option>Hostinger</option><option>Hostgator</option><option>Ambos</option><option>Outro</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:20px;justify-content:flex-end">
+      <button onclick="closeModal()" style="background:#f1f5f9;color:var(--text2);border:none;padding:9px 18px;border-radius:7px;cursor:pointer;font-family:inherit;font-size:.82rem;font-weight:600">Cancelar</button>
+      <button onclick="confirmAdd()" style="background:var(--green);color:#fff;border:none;padding:9px 18px;border-radius:7px;cursor:pointer;font-family:inherit;font-size:.82rem;font-weight:600">＋ Adicionar</button>
+    </div>
+  </div>
 </div>
 
 <footer id="footer">Indexnet · Atualizado automaticamente pelo check_sites.py</footer>
@@ -363,23 +397,33 @@ function renderTable(clients) {
     const platform = c._platform || c.platform || '';
     const wpVer   = c._wp_ver  || c.wp_ver  || '';
     const phpVer  = c._php_ver || c.php_ver || '';
+    const srv     = c._servidor || c.servidor || '';
     const traff   = !!(c.traffic && String(c.traffic).trim() !== '' && String(c.traffic).toLowerCase() !== 'none' && String(c.traffic) !== '0' && String(c.traffic).toLowerCase() !== 'false');
-    const fpmVal  = String(c.php_fpm||'').toLowerCase().trim();
-    const fpmOk   = fpmVal && fpmVal !== 'none' && fpmVal !== 'false' && fpmVal !== '0' && fpmVal !== 'não' && fpmVal !== 'nao' && fpmVal !== '';
+    const fpmVal  = String(c._php_fpm||c.php_fpm||'').toLowerCase().trim();
+    const fpmOk   = fpmVal && fpmVal !== 'none' && fpmVal !== 'false' && fpmVal !== '0' && fpmVal !== 'não' && fpmVal !== 'nao';
     const speedUrl = `https://pagespeed.web.dev/analysis?url=https://${c.domain}`;
     tr.innerHTML = `
       <td class="num-col">${i+1}</td>
-      <td><strong style="color:var(--navy)">${esc(c.username)}</strong>${isSusp?'<span class="badge badge-susp">⚠ Suspenso</span>':''}</td>
+      <td><strong style="color:var(--navy)">${esc(c.username)}</strong></td>
       <td><a href="https://${c.domain}" target="_blank">${esc(c.domain)}</a></td>
-      <td><span class="srv ${srvCls(c.servidor)}">${esc(c.servidor||'?')}</span></td>
+      <td class="editable" data-field="_servidor">
+        <select class="srv-sel srv ${srvCls(srv)}" data-field="_servidor" onchange="markDirty();this.className='srv-sel srv '+srvCls(this.value)" disabled>
+          <option value="" ${!srv||srv==='?'?'selected':''}>?</option>
+          <option ${srv==='Hostinger'?'selected':''}>Hostinger</option>
+          <option ${srv==='Hostgator'?'selected':''}>Hostgator</option>
+          <option ${srv==='Ambos'?'selected':''}>Ambos</option>
+          <option ${srv==='Outro'?'selected':''}>Outro</option>
+        </select>
+      </td>
       <td class="editable" data-field="_platform" style="font-size:.78rem">${esc(platform)}</td>
       <td class="chk-col"><span class="ck ${ghOk?'ck-ok':'ck-no'}">${ghOk?'✓':'✗'}</span></td>
       <td class="chk-col"><span class="ck ${cfOk?'ck-ok':'ck-no'}">${cfOk?'✓':'✗'}</span></td>
-      <td class="chk-col"><span class="ck ${traff?'ck-ok':'ck-no'}">${traff?'✓':'✗'}</span></td>
+      <td class="chk-col"><span class="ck ck-toggle ${traff?'ck-ok':'ck-no'}" onclick="toggleFld(this,'traffic',${i})">${traff?'✓':'✗'}</span></td>
       <td class="editable" data-field="_plugins">${pluginsBadge(c._plugins||c.plugins||'')}</td>
       <td class="editable" data-field="_wp_ver"><code style="font-size:.75rem">${esc(wpVer)}</code></td>
       <td class="editable" data-field="_php_ver"><code style="font-size:.75rem">${esc(phpVer)}</code></td>
-      <td class="chk-col editable" data-field="_php_fpm"><span class="ck ${fpmOk?'ck-ok':'ck-no'}">${fpmOk?'✓':'✗'}</span></td>
+      <td class="chk-col"><span class="ck ck-toggle ${fpmOk?'ck-ok':'ck-no'}" onclick="toggleFld(this,'_php_fpm',${i})">${fpmOk?'✓':'✗'}</span></td>
+      <td class="chk-col"><span class="ck ck-toggle ${isSusp?'ck-no':'ck-ok'}" style="${isSusp?'background:#fef2f2;color:#dc2626':''}" onclick="toggleFld(this,'suspended',${i})">${isSusp?'⚠':'✓'}</span></td>
       <td class="chk-col"><a href="${speedUrl}" target="_blank" class="speed-link" title="Abrir PageSpeed Insights">⚡</a></td>
       <td class="editable col-extra" data-field="_responsavel">
         <select class="resp-sel" data-field="_responsavel" onchange="markDirty()" disabled>
@@ -403,7 +447,8 @@ function renderTable(clients) {
         </select>
       </td>
       <td class="editable col-extra" data-field="_prioridade" style="text-align:center">${esc(c._prioridade||'')}</td>
-      <td class="editable col-extra obs-col" data-field="_obs">${esc(c._obs||c.obs||'')}</td>`;
+      <td class="editable col-extra obs-col" data-field="_obs">${esc(c._obs||c.obs||'')}</td>
+      <td class="del-col"><button class="del-btn" onclick="deleteRow(${i})" title="Remover linha">✕</button></td>`;
     tbody.appendChild(tr);
     visible++;
   });
@@ -471,6 +516,7 @@ function enterEditMode() {
   document.querySelector('.btn-save').style.display = 'inline-flex';
   document.querySelector('.btn-cancel').style.display = 'inline-flex';
   document.querySelector('.btn-logout').style.display = 'inline-flex';
+  document.body.classList.add('editing');
   document.querySelectorAll('td.editable').forEach(td => {
     td.classList.add('edit-active');
     const sel = td.querySelector('select');
@@ -486,6 +532,7 @@ function cancelEdit() {
   document.querySelector('.btn-edit').style.display = 'inline-flex';
   document.querySelector('.btn-save').style.display = 'none';
   document.querySelector('.btn-cancel').style.display = 'none';
+  document.body.classList.remove('editing');
   renderTable(DATA.clients);
   filterRows();
 }
@@ -562,6 +609,65 @@ function filterRows() {
     if (ok) shown++;
   });
   updateCount(shown, DATA.clients.length);
+}
+
+/* ── Toggle checkmark ── */
+function toggleFld(span, field, idx) {
+  if (!editMode) return;
+  const isOn = span.classList.contains('ck-ok');
+  span.className = 'ck ck-toggle ' + (isOn ? 'ck-no' : 'ck-ok');
+  if (field === 'suspended') {
+    span.textContent = isOn ? '✓' : '⚠';
+    if (!isOn) span.style.cssText = 'background:#fef2f2;color:#dc2626';
+    else span.style.cssText = '';
+    DATA.clients[idx].suspended = !isOn;
+  } else {
+    span.textContent = isOn ? '✗' : '✓';
+    DATA.clients[idx][field] = isOn ? '' : 'Ativo';
+  }
+  markDirty();
+}
+
+/* ── Delete row ── */
+function deleteRow(idx) {
+  const c = DATA.clients[idx];
+  if (!confirm(`Remover "${c.username}" (${c.domain})?`)) return;
+  DATA.clients.splice(idx, 1);
+  markDirty();
+  renderTable(DATA.clients);
+  filterRows();
+  toast('Linha removida — clique Salvar para confirmar.', 'info');
+}
+
+/* ── Add domain modal ── */
+function addDomain() {
+  document.getElementById('modal-add').style.display = 'flex';
+  setTimeout(() => document.getElementById('add-username').focus(), 50);
+}
+function closeModal() {
+  document.getElementById('modal-add').style.display = 'none';
+  ['add-username','add-domain'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('add-servidor').value = '';
+}
+function confirmAdd() {
+  const u = document.getElementById('add-username').value.trim();
+  const d = document.getElementById('add-domain').value.trim().replace(/^https?:\/\//,'');
+  const s = document.getElementById('add-servidor').value;
+  if (!u || !d) { toast('Preencha username e domínio.', 'err'); return; }
+  DATA.clients.push({
+    username:u, domain:d, servidor:s, _servidor:s,
+    github:false, cloudflare:'', suspended:false, traffic:'',
+    plugins:'', wp_ver:'', php_ver:'', php_fpm:'', platform:'',
+    _platform:'', _plugins:'', _wp_ver:'', _php_ver:'', _php_fpm:'',
+    _responsavel:'', _status_gh:'Pendente', _status_cf:'Pendente',
+    _prioridade:'', _obs:''
+  });
+  markDirty();
+  closeModal();
+  renderTable(DATA.clients);
+  if (editMode) enterEditMode();
+  filterRows();
+  toast(`"${u}" adicionado — clique Salvar para confirmar.`, 'ok');
 }
 
 /* ── Safety ── */

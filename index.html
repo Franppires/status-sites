@@ -402,12 +402,31 @@ function autoEditSel(sel, idx, field) {
   return true;
 }
 
-/* ── Auto-save (debounced 1.5s) ── */
-let _saveTimer = null;
-function autoSave() {
+/* ── Auto-save imediato (sem sair do modo edição) ── */
+let _saving = false;
+let _savePending = false;
+async function autoSave() {
   markDirty();
-  clearTimeout(_saveTimer);
-  _saveTimer = setTimeout(() => { if (dirty) saveData(); }, 1500);
+  if (_saving) { _savePending = true; return; }
+  _saving = true;
+  const token = localStorage.getItem('gh_token');
+  if (!token) { _saving = false; return; }
+  collectEdits();
+  try {
+    const getR = await fetch(API, { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' } });
+    if (!getR.ok) throw new Error(getR.status);
+    const meta = await getR.json();
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(DATA, null, 2))));
+    const putR = await fetch(API, {
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: 'dashboard auto-save', content, sha: meta.sha })
+    });
+    if (putR.ok) { dirty = false; toast('✓', 'ok'); }
+    else { const e = await putR.json(); toast('Erro: ' + (e.message||putR.status), 'err'); }
+  } catch(e) { toast('Erro ao salvar: ' + e.message, 'err'); }
+  _saving = false;
+  if (_savePending) { _savePending = false; autoSave(); }
 }
 
 

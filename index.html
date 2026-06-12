@@ -98,6 +98,10 @@ tr.none td:first-child{box-shadow:inset 3px 0 0 #e5e7eb}
 tr.suspended td{background:#fef2f2!important;border-bottom-color:#fecaca!important}
 tr.suspended td:first-child{box-shadow:inset 4px 0 0 var(--red)!important}
 tr.suspended strong{color:var(--red)!important}
+/* Platform / server accent border */
+tr.row-tray td:first-child{box-shadow:inset 4px 0 0 #3b82f6}
+tr.row-loja td:first-child{box-shadow:inset 4px 0 0 #16a34a}
+tr.row-hostinger td:first-child{box-shadow:inset 4px 0 0 #7c3aed}
 .badge-susp{background:#fef2f2;color:#dc2626;border:1px solid #fecaca;display:inline-flex;align-items:center;gap:2px;padding:2px 6px;border-radius:12px;font-size:.63rem;font-weight:700;margin-left:5px;vertical-align:middle}
 
 /* ── BADGES ── */
@@ -441,7 +445,10 @@ function renderTable(clients) {
     const isSusp = c.suspended === true;
     const tr = document.createElement('tr');
     const baseClass = ghOk && cfOk ? 'done' : ghOk || cfOk ? 'partial' : 'none';
-    tr.className = isSusp ? 'suspended ' + baseClass : baseClass;
+    const _plat = (c._platform||c.platform||'');
+    const _srv  = (c._servidor||c.servidor||'');
+    const accentClass = _plat==='Tray'?'row-tray':_plat==='Loja Integrada'?'row-loja':_srv==='Hostinger'?'row-hostinger':'';
+    tr.className = (isSusp ? 'suspended ' : '') + baseClass + (accentClass ? ' '+accentClass : '');
     tr.dataset.idx = i;
     const stgh = c._status_gh || 'Pendente';
     const stcf = c._status_cf || 'Pendente';

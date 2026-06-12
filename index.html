@@ -637,7 +637,13 @@ function filterRows() {
 
 /* ── Toggle checkmark ── */
 function toggleFld(span, field, idx) {
-  if (!editMode) return;
+  if (!editMode) {
+    if (!localStorage.getItem('gh_token')) {
+      toast('Clique em Editar e insira seu token GitHub primeiro.', 'err');
+      return;
+    }
+    enterEditMode();
+  }
   const isOn = span.classList.contains('ck-ok');
   span.className = 'ck ck-toggle ' + (isOn ? 'ck-no' : 'ck-ok');
   if (field === 'suspended') {

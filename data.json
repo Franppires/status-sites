@@ -91,7 +91,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "-",
       "_wp_ver": "6.5.5"
     },
@@ -178,8 +178,8 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
-      "_php_ver": " 7.4",
+      "_platform": "Wordpress",
+      "_php_ver": "7.4",
       "_wp_ver": "6.9"
     },
     {
@@ -207,8 +207,8 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
-      "_php_ver": " 7.4",
+      "_platform": "Wordpress",
+      "_php_ver": "7.4",
       "_wp_ver": "6.5.5"
     },
     {
@@ -238,7 +238,7 @@
       "_obs": "",
       "_platform": "Wordpress",
       "_php_ver": "8.1",
-      "_wp_ver": ""
+      "_wp_ver": "6.5.5"
     },
     {
       "username": "Ananery",
@@ -294,8 +294,8 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
-      "_php_ver": "7.4 ",
+      "_platform": "Wordpress",
+      "_php_ver": "7.4",
       "_wp_ver": "6.5.5"
     },
     {
@@ -352,7 +352,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "8.3",
       "_wp_ver": "6.8.3"
     },
@@ -468,7 +468,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "",
       "_wp_ver": ""
     },
@@ -497,8 +497,8 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
-      "_php_ver": " 7.4",
+      "_platform": "Wordpress",
+      "_php_ver": "7.4",
       "_wp_ver": "6.5.5"
     },
     {
@@ -526,8 +526,8 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
-      "_php_ver": " 8.2",
+      "_platform": "Wordpress",
+      "_php_ver": "8.2",
       "_wp_ver": "6.8.2"
     },
     {
@@ -555,7 +555,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "8.1",
       "_wp_ver": "6.8.3"
     },
@@ -671,7 +671,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "7.3",
       "_wp_ver": "6.5.5"
     },
@@ -787,7 +787,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "",
       "_wp_ver": ""
     },
@@ -874,7 +874,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "7.4",
       "_wp_ver": "6.5.5"
     },
@@ -932,7 +932,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "8.3",
       "_wp_ver": "6.8.3"
     },
@@ -990,8 +990,8 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
-      "_php_ver": "7.4 ",
+      "_platform": "Wordpress",
+      "_php_ver": "7.4",
       "_wp_ver": "6.5.5"
     },
     {
@@ -1077,7 +1077,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Tray ",
+      "_platform": "Tray",
       "_php_ver": "-",
       "_wp_ver": "-"
     },
@@ -1163,9 +1163,9 @@
       "_status_gh": "Pendente",
       "_status_cf": "Pendente",
       "_prioridade": "",
-      "_obs": "",
-      "_platform": "Wordpress ",
-      "_php_ver": "7.4 ",
+      "_obs": "CONVERTER PARA HTML",
+      "_platform": "Wordpress",
+      "_php_ver": "7.4",
       "_wp_ver": "6.8.2"
     },
     {
@@ -1193,7 +1193,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "8.3",
       "_wp_ver": "6.8.3"
     },
@@ -1222,7 +1222,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "8.3",
       "_wp_ver": "6.8.2"
     },
@@ -1250,7 +1250,7 @@
       "_status_gh": "Pendente",
       "_status_cf": "Pendente",
       "_prioridade": "",
-      "_obs": "",
+      "_obs": "Estão apenas utilizando nossos serviços de e-mail",
       "_platform": "-",
       "_php_ver": "8.1",
       "_wp_ver": "-"
@@ -1280,7 +1280,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "8.3",
       "_wp_ver": "6.8.2"
     },
@@ -1309,7 +1309,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "7.4",
       "_wp_ver": "6.5.5"
     },
@@ -1338,7 +1338,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "8.3",
       "_wp_ver": "6.8.3"
     },
@@ -1396,7 +1396,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "8.1",
       "_wp_ver": "6.8.2"
     },
@@ -1482,7 +1482,7 @@
       "_status_gh": "Pendente",
       "_status_cf": "Pendente",
       "_prioridade": "",
-      "_obs": "",
+      "_obs": "Não esta hospedado em nenhum dos dois servidores.",
       "_platform": "HTML",
       "_php_ver": "?",
       "_wp_ver": "?"
@@ -2846,7 +2846,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "7.4",
       "_wp_ver": "6.5.5"
     },
@@ -2875,7 +2875,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "7.4",
       "_wp_ver": "6.5.5"
     },
@@ -2904,8 +2904,8 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
-      "_php_ver": "7.4 ",
+      "_platform": "Wordpress",
+      "_php_ver": "7.4",
       "_wp_ver": "6.5.5"
     },
     {
@@ -2933,8 +2933,8 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
-      "_php_ver": "7.4 ",
+      "_platform": "Wordpress",
+      "_php_ver": "7.4",
       "_wp_ver": "6.5.5"
     },
     {
@@ -3049,7 +3049,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
+      "_platform": "Wordpress",
       "_php_ver": "8.3",
       "_wp_ver": "6.8.2"
     },
@@ -3136,8 +3136,8 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Wordpress ",
-      "_php_ver": "7.4 ",
+      "_platform": "Wordpress",
+      "_php_ver": "7.4",
       "_wp_ver": "6.5.5"
     },
     {
@@ -3194,7 +3194,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "\tPython",
+      "_platform": "Python",
       "_php_ver": "",
       "_wp_ver": ""
     },
@@ -3252,7 +3252,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Lara ",
+      "_platform": "Lara",
       "_php_ver": "",
       "_wp_ver": ""
     },
@@ -3310,7 +3310,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "HTML ",
+      "_platform": "HTML",
       "_php_ver": "",
       "_wp_ver": ""
     },
@@ -3369,7 +3369,7 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "HTML",
-      "_php_ver": "7.4 ",
+      "_php_ver": "7.4",
       "_wp_ver": "-"
     },
     {
@@ -3514,7 +3514,7 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "Wordpress",
-      "_php_ver": "7.4 ",
+      "_php_ver": "7.4",
       "_wp_ver": "6.4.3"
     },
     {
@@ -3599,7 +3599,7 @@
       "_status_gh": "Pendente",
       "_status_cf": "Pendente",
       "_prioridade": "",
-      "_obs": "",
+      "_obs": "O site não existe mais",
       "_platform": "Wordpress",
       "_php_ver": "-",
       "_wp_ver": "-"
@@ -3631,7 +3631,7 @@
       "_obs": "",
       "_platform": "Wordpress",
       "_php_ver": "8.3",
-      "_wp_ver": " 6.8.2"
+      "_wp_ver": "6.8.2"
     },
     {
       "username": "gaboardi",
@@ -3746,7 +3746,7 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "Wordpress",
-      "_php_ver": "7.4 ",
+      "_php_ver": "7.4",
       "_wp_ver": "6.4.3"
     },
     {
@@ -3775,8 +3775,8 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "Wordpress",
-      "_php_ver": "7.4 ",
-      "_wp_ver": " 6.4.3"
+      "_php_ver": "7.4",
+      "_wp_ver": "6.4.3"
     },
     {
       "username": "greenville",
@@ -3891,7 +3891,7 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "Wordpress",
-      "_php_ver": "7.4 ",
+      "_php_ver": "7.4",
       "_wp_ver": "6.5.2"
     },
     {
@@ -3919,7 +3919,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "IndexOF ",
+      "_platform": "IndexOF",
       "_php_ver": "",
       "_wp_ver": ""
     },
@@ -3949,8 +3949,8 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "Wordpress",
-      "_php_ver": "7.4 ",
-      "_wp_ver": " 6.8.2"
+      "_php_ver": "7.4",
+      "_wp_ver": "6.8.2"
     },
     {
       "username": "indexhost",
@@ -4007,8 +4007,8 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "Wordpress",
-      "_php_ver": "7.4 ",
-      "_wp_ver": " 6.4.3"
+      "_php_ver": "7.4",
+      "_wp_ver": "6.4.3"
     },
     {
       "username": "jaffacosmeticos",
@@ -4094,7 +4094,7 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "Wordpress",
-      "_php_ver": "7.4 ",
+      "_php_ver": "7.4",
       "_wp_ver": "6.4.3"
     },
     {
@@ -4151,7 +4151,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Loja Integrada ",
+      "_platform": "Loja Integrada",
       "_php_ver": "",
       "_wp_ver": ""
     },
@@ -4239,7 +4239,7 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "Wordpress",
-      "_php_ver": "7.4 ",
+      "_php_ver": "7.4",
       "_wp_ver": "6.5.2"
     },
     {
@@ -4586,7 +4586,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "Tray ",
+      "_platform": "Tray",
       "_php_ver": "-",
       "_wp_ver": "-"
     },
@@ -4643,7 +4643,7 @@
       "_status_gh": "Pendente",
       "_status_cf": "Pendente",
       "_prioridade": "",
-      "_obs": "",
+      "_obs": "Ao atualizar o PHP para a versão mais recente, o site parou de funcionar, por isso esta na versao 7.4",
       "_platform": "Wordpress",
       "_php_ver": "7.4",
       "_wp_ver": "6.8.3"
@@ -4674,7 +4674,7 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "Wordpress",
-      "_php_ver": "7.4 ",
+      "_php_ver": "7.4",
       "_wp_ver": "6.4.3"
     },
     {
@@ -4702,7 +4702,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": " ",
+      "_platform": "",
       "_php_ver": "",
       "_wp_ver": ""
     },
@@ -4935,7 +4935,7 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "Wordpress",
-      "_php_ver": "7.4 ",
+      "_php_ver": "7.4",
       "_wp_ver": "6.4.3"
     },
     {
@@ -4993,7 +4993,7 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "Wordpress",
-      "_php_ver": "7.4 ",
+      "_php_ver": "7.4",
       "_wp_ver": "6.4.3"
     },
     {
@@ -5138,7 +5138,7 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "Wordpress",
-      "_php_ver": "7.4 ",
+      "_php_ver": "7.4",
       "_wp_ver": "6.4.3"
     },
     {
@@ -5165,7 +5165,7 @@
       "_status_gh": "Pendente",
       "_status_cf": "Pendente",
       "_prioridade": "",
-      "_obs": "",
+      "_obs": "Esta utiliado na hostinger mas tem uma conta ativa na hostgator.",
       "_platform": "Wordpress",
       "_php_ver": "8.3",
       "_wp_ver": "6.8.3"
@@ -5196,7 +5196,7 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "HTML",
-      "_php_ver": "7.4 ",
+      "_php_ver": "7.4",
       "_wp_ver": ""
     },
     {
@@ -5427,7 +5427,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "IndexOF ",
+      "_platform": "IndexOF",
       "_php_ver": "",
       "_wp_ver": ""
     },
@@ -5457,7 +5457,7 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "Wordpress",
-      "_php_ver": "7.4 ",
+      "_php_ver": "7.4",
       "_wp_ver": "6.4.3"
     },
     {
@@ -5515,7 +5515,7 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "Wordpress",
-      "_php_ver": "7.4 ",
+      "_php_ver": "7.4",
       "_wp_ver": "6.4.3"
     },
     {
@@ -5571,7 +5571,7 @@
       "_status_gh": "Pendente",
       "_status_cf": "Pendente",
       "_prioridade": "",
-      "_obs": "",
+      "_obs": "Não achei o acesso do wordpress em nenhuma pasta ou arquivo.",
       "_platform": "Wordpress",
       "_php_ver": "8.1",
       "_wp_ver": "-"
@@ -5629,7 +5629,7 @@
       "_status_gh": "Pendente",
       "_status_cf": "Pendente",
       "_prioridade": "",
-      "_obs": "",
+      "_obs": "Esta suspenso na hostgator e ativo na hostinger",
       "_platform": "Wordpress",
       "_php_ver": "8.1",
       "_wp_ver": "6.8.3"
@@ -5745,7 +5745,7 @@
       "_status_gh": "Pendente",
       "_status_cf": "Pendente",
       "_prioridade": "",
-      "_obs": "",
+      "_obs": "Rodam trafego pago más não somos nós que tomamos conta",
       "_platform": "Wordpress",
       "_php_ver": "8.1",
       "_wp_ver": "6.8.3"
@@ -5979,7 +5979,7 @@
       "_prioridade": "",
       "_obs": "",
       "_platform": "Wordpress",
-      "_php_ver": "7.4 ",
+      "_php_ver": "7.4",
       "_wp_ver": "6.4.3"
     },
     {
@@ -6267,7 +6267,7 @@
       "_status_gh": "Pendente",
       "_status_cf": "Pendente",
       "_prioridade": "",
-      "_obs": "",
+      "_obs": "CONVERTER PARA HTML",
       "_platform": "Wordpress",
       "_php_ver": "7.4",
       "_wp_ver": "-"
@@ -6499,7 +6499,7 @@
       "_status_gh": "Pendente",
       "_status_cf": "Pendente",
       "_prioridade": "",
-      "_obs": "",
+      "_obs": "Suspenso",
       "_platform": "Wordpress",
       "_php_ver": "8.1",
       "_wp_ver": "6.9"
@@ -6877,7 +6877,7 @@
       "_status_cf": "Pendente",
       "_prioridade": "",
       "_obs": "",
-      "_platform": "",
+      "_platform": "Shopify",
       "_php_ver": "",
       "_wp_ver": ""
     }

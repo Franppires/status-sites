@@ -406,7 +406,7 @@ function autoEditSel(sel, idx, field) {
   return true;
 }
 
-/* ── Auto-save imediato (sem sair do modo edição) ── */
+/* ── Auto-save imediato com retry em conflito de SHA ── */
 let _saving = false;
 let _savePending = false;
 async function autoSave() {
@@ -416,19 +416,25 @@ async function autoSave() {
   const token = localStorage.getItem('gh_token');
   if (!token) { _saving = false; return; }
   collectEdits();
-  try {
-    const getR = await fetch(API, { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' } });
-    if (!getR.ok) throw new Error(getR.status);
-    const meta = await getR.json();
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(DATA, null, 2))));
-    const putR = await fetch(API, {
-      method: 'PUT',
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message: 'dashboard auto-save', content, sha: meta.sha })
-    });
-    if (putR.ok) { dirty = false; toast('✓', 'ok'); }
-    else { const e = await putR.json(); toast('Erro: ' + (e.message||putR.status), 'err'); }
-  } catch(e) { toast('Erro ao salvar: ' + e.message, 'err'); }
+  let attempts = 0;
+  while (attempts < 3) {
+    attempts++;
+    try {
+      const getR = await fetch(API, { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' } });
+      if (!getR.ok) throw new Error('SHA fetch ' + getR.status);
+      const meta = await getR.json();
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(DATA, null, 2))));
+      const putR = await fetch(API, {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'dashboard auto-save', content, sha: meta.sha })
+      });
+      if (putR.ok) { dirty = false; toast('✓', 'ok'); break; }
+      const e = await putR.json();
+      if (putR.status === 409 || (e.message||'').includes('does not match')) continue;
+      toast('Erro ao salvar: ' + (e.message||putR.status), 'err'); break;
+    } catch(e) { toast('Erro ao salvar: ' + e.message, 'err'); break; }
+  }
   _saving = false;
   if (_savePending) { _savePending = false; autoSave(); }
 }

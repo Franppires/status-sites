@@ -421,7 +421,7 @@ async function autoSave() {
   collectEdits();
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      const getR = await fetch(API + '?ref=data', { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' } });
+      const getR = await fetch(API + '?ref=data&_=' + Date.now(), { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' }, cache: 'no-store' });
       if (!getR.ok) throw new Error('SHA fetch ' + getR.status);
       const meta = await getR.json();
       const content = btoa(unescape(encodeURIComponent(JSON.stringify(DATA, null, 2))));

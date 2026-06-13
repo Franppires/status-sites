@@ -253,6 +253,7 @@ table.show-cols .col-extra{display:table-cell}
     <option value="">Cloudflare: todos</option>
     <option value="ok">✓ Ativo</option>
     <option value="no">✗ Sem CF</option>
+    <option value="pend">⚠ Pend. apontamento</option>
   </select>
   <select class="fil" id="fil-resp" onchange="filterRows()">
     <option value="">Responsável: todos</option>
@@ -283,6 +284,7 @@ table.show-cols .col-extra{display:table-cell}
         <th>Plataforma</th>
         <th class="chk-col" title="GitHub">GH</th>
         <th class="chk-col" title="Cloudflare">CF</th>
+        <th class="chk-col" title="DNS pendente de apontamento para Cloudflare">Pend.</th>
         <th class="chk-col" title="Tráfego">Tráf.</th>
         <th>WP</th>
         <th>PHP</th>
@@ -429,9 +431,11 @@ async function autoSave() {
         body: JSON.stringify({ message: 'dashboard auto-save', content, sha: meta.sha, branch: 'data' })
       });
       if (putR.ok) { dirty = false; toast('✓', 'ok'); break; }
-      if (attempt < 2) continue;
+      if (putR.status === 422 && attempt < 2) continue; // SHA conflict — retry
       const e = await putR.json().catch(() => ({}));
-      toast('Erro ao salvar: ' + (e.message||putR.status), 'err');
+      const hint = putR.status===403 ? ' (sem permissão — verifique o token)' : putR.status===401 ? ' (token inválido)' : '';
+      toast(`Erro ${putR.status}${hint}: ${e.message||''}`, 'err');
+      break;
     } catch(e) {
       if (attempt < 2) continue;
       toast('Erro ao salvar: ' + e.message, 'err');
@@ -449,7 +453,9 @@ function renderTable(clients) {
   let visible = 0;
   clients.forEach((c, i) => {
     const ghOk = c.github === true;
-    const cfOk = (c.cloudflare||'').startsWith('Ativ');
+    const cfRaw = (c.cloudflare||'').toLowerCase();
+    const cfOk  = cfRaw.startsWith('ativ');
+    const cfPend = cfRaw === 'pending' || cfRaw === 'moved' || cfRaw.includes('inválid') || cfRaw.includes('invalid');
     const isSusp = c.suspended === true;
     const tr = document.createElement('tr');
     const baseClass = ghOk && cfOk ? 'done' : ghOk || cfOk ? 'partial' : 'none';
@@ -499,6 +505,7 @@ function renderTable(clients) {
       </td>
       <td class="chk-col"><span class="ck ck-toggle ${ghOk?'ck-ok':'ck-no'}" onclick="toggleFld(this,'github',${i})">${ghOk?'✓':'✗'}</span></td>
       <td class="chk-col"><span class="ck ck-toggle ${cfOk?'ck-ok':'ck-no'}" onclick="toggleFld(this,'cloudflare',${i})">${cfOk?'✓':'✗'}</span></td>
+      <td class="chk-col">${cfPend?`<span class="ck" style="background:#fef9c3;color:#92400e;font-size:.7rem" title="${esc(c.cloudflare)}">⚠</span>`:''}</td>
       <td class="chk-col"><span class="ck ck-toggle ${traff?'ck-ok':'ck-no'}" onclick="toggleFld(this,'traffic',${i})">${traff?'✓':'✗'}</span></td>
       <td class="editable" data-field="_wp_ver"><code style="font-size:.75rem">${esc(wpVer)}</code></td>
       <td class="editable" data-field="_php_ver"><code style="font-size:.75rem">${esc(phpVer)}</code></td>
@@ -671,8 +678,9 @@ function filterRows() {
     if (srv && c.servidor !== srv) ok = false;
     if (gh === 'true' && c.github !== true) ok = false;
     if (gh === 'false' && c.github === true) ok = false;
-    if (cf === 'ok' && !(c.cloudflare||'').startsWith('Ativ')) ok = false;
-    if (cf === 'no' && (c.cloudflare||'').startsWith('Ativ')) ok = false;
+    if (cf === 'ok'   && !(c.cloudflare||'').toLowerCase().startsWith('ativ')) ok = false;
+    if (cf === 'no'   &&  (c.cloudflare||'').toLowerCase().startsWith('ativ')) ok = false;
+    if (cf === 'pend') { const r=(c.cloudflare||'').toLowerCase(); if(r!=='pending'&&r!=='moved'&&!r.includes('inválid')&&!r.includes('invalid')) ok=false; }
     if (resp === 'none' && c._responsavel) ok = false;
     if (resp && resp !== 'none' && c._responsavel !== resp) ok = false;
     if (st && c._status_gh !== st && c._status_cf !== st) ok = false;
